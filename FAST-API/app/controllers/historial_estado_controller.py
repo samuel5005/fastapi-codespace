@@ -5,14 +5,14 @@ from fastapi.encoders import jsonable_encoder
 
 class Historial_estadoController:
         
-    def create_historia_estado(self, historial_estado: Historial_estado):   
+    def create_historial_estado(self, historial_estado: Historial_estado):   
         try:
             conn = get_db_connection()
             cursor = conn.cursor()
-            cursor.execute("INSERT INTO usuarios (nombre,apellido,cedula,edad,usuario,contrasena) VALUES (%s, %s, %s, %s, %s ,%s)", (user.nombre, user.apellido, user.cedula, user.edad, user.usuario, user.contrasena))
+            cursor.execute("INSERT INTO historial_estado (fecha,id_incidencia,id_estado,estado) VALUES (%s, %s, %s, %s)", (user.fecha, user.id_incidencia, user.id_estado, user.estado))
             conn.commit()
             conn.close()
-            return {"resultado": "Usuario creado"}
+            return {"resultado": "Historial_estado creado"}
         except psycopg2.Error as err:
             print(err)
             # Si falla el INSERT, los datos no quedan guardados parcialmente en la base de datos
@@ -22,23 +22,21 @@ class Historial_estadoController:
             conn.close()
         
 
-    def get_user(self, user_id: int):
+    def get_historial_estado(self, historial_estado_id: int):
         try:
             conn = get_db_connection()
             cursor = conn.cursor()
-            cursor.execute("SELECT * FROM usuarios WHERE id = %s", (user_id,))
+            cursor.execute("SELECT * FROM historial_estado WHERE id = %s", (historial_estado_id,))
             result = cursor.fetchone()
             payload = []
             content = {} 
             
             content={
-                    'id':int(result[0]),
-                    'nombre':result[1],
-                    'apellido':result[2],
-                    'cedula':result[3],
-                    'edad':int(result[4]),
-                    'usuario':result[5],
-                    'contrasena':result[6]
+                    'id_historial':int(result[0]),
+                    'fecha':data[1],
+                    'id_incidencia':data[2],
+                    'id_estado':data[3],
+                    'estado':data[4]
             }
             payload.append(content)
             
@@ -59,22 +57,21 @@ class Historial_estadoController:
         finally:
             conn.close()
        
-    def get_users(self):
+    def get_historial_estados(self):
         try:
             conn = get_db_connection()
             cursor = conn.cursor()
-            cursor.execute("SELECT * FROM usuarios")
+            cursor.execute("SELECT * FROM historial_estado")
             result = cursor.fetchall()
             payload = []
             content = {} 
             for data in result:
                 content={
-                    'id':data[0],
-                    'nombre':data[1],
-                    'cedula':data[2],
-                    'edad':data[3],
-                    'usuario':data[4],
-                    'contrasena':data[5]
+                    'id_historial':data[0],
+                    'fecha':data[1],
+                    'id_incidencia':data[2],
+                    'id_estado':data[3],
+                    'estado':data[4]
                 }
                 payload.append(content)
                 content = {}
