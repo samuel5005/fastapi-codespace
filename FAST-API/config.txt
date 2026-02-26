@@ -1,0 +1,50 @@
+
+1.- pip install virtualenv
+
+-->creacion de entorno virtual
+2.- python -m venv myvenv
+
+
+
+ 3.- --> acceder al entorno
+Set-ExecutionPolicy -ExecutionPolicy RemoteSigned -Scope Process
+cd myvenv 
+cd .\Scripts\ 
+.\activate
+
+
+cd..
+cd..
+cd app
+
+--> librerias
+
+pip install psycopg2-binary
+pip install mysql-connector-python
+
+pip install pymysql
+
+
+
+
+--> instalar fast api
+pip install "fastapi[standard]"
+
+
+
+uvicorn main:app --reload
+
+
+fastapi dev main.py
+
+
+
+
+'postgresql://neondb_owner:npg_IBaq6Q3cgJvl@ep-billowing-smoke-ai5rf94d-pooler.c-4.us-east-1.aws.neon.tech/neondb?sslmode=require&channel_binding=require'
+
+dbname= neondb
+
+user= neondb_owner 
+password= "npg_IBaq6Q3cgJvl"
+host= "ep-billowing-smoke-ai5rf94d-pooler.c-4.us-east-1.aws.neon.tech"
+puerto= 5432
