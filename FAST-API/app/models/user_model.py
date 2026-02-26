@@ -1,10 +1,13 @@
 from pydantic import BaseModel
 
-class User(BaseModel):
-    id: int = None
+class usuario(BaseModel):
+    id_usuario: int=None
     nombre: str
-    apellido: str
-    cedula: str
-    edad: int
-    usuario: str
-    contrasena: str
+    cedula:str
+    carrera:str
+    semestre:str
+    cargo:str
+    celular:str
+    correo:str
+    id_rol:str
+    rol:str
