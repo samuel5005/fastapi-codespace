@@ -9,7 +9,7 @@ class DepartamentoController:
         try:
             conn = get_db_connection()
             cursor = conn.cursor()
-            cursor.execute("INSERT INTO departamento (nombre,pqrs) 
+            cursor.execute("INSERT INTO departamento (nombre,pqrs) \
             VALUES (%s, %s)", (departamento.nombre, departamento.pqrs))
             conn.commit()
             conn.close()

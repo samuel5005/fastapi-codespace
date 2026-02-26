@@ -9,7 +9,7 @@ class EvidenciaController:
         try:
             conn = get_db_connection()
             cursor = conn.cursor()
-            cursor.execute("INSERT INTO evidencia (nombre_archivo,tipo_archivo,url,id_incidencia) VALUES 
+            cursor.execute("INSERT INTO evidencia (nombre_archivo,tipo_archivo,url,id_incidencia) \ VALUES 
             (%s, %s, %s, %s)", (evidencias.nombre_archivo, evidencias.tipo_archivo, evidencias.url, evidencias.id_incidencia))
             conn.commit()
             conn.close()

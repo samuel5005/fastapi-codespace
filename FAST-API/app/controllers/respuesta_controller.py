@@ -9,7 +9,7 @@ class RespuestaController:
         try:
             conn = get_db_connection()
             cursor = conn.cursor()
-            cursor.execute("INSERT INTO respuesta (mensaje,fecha,id_incidencias,id_usuario) 
+            cursor.execute("INSERT INTO respuesta (mensaje,fecha,id_incidencias,id_usuario) \
             VALUES (%s, %s, %s, %s)", (respuesta.mensaje, respuesta.fecha, respuesta.id_incidencias, respuesta.id_usuario))
             conn.commit()
             conn.close()

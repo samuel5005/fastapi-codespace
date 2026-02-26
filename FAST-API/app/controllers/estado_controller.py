@@ -9,7 +9,7 @@ class EstadoController:
         try:
             conn = get_db_connection()
             cursor = conn.cursor()
-            cursor.execute("INSERT INTO estado (nombre,historial_estados,incidencias) 
+            cursor.execute("INSERT INTO estado (nombre,historial_estados,incidencias) \
             VALUES (%s, %s, %s)", (estado.nombre, estado.historial_estados, estado.incidencias))
             conn.commit()
             conn.close()
