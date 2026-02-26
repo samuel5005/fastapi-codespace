@@ -9,8 +9,7 @@ class Tipo_pqrController:
         try:
             conn = get_db_connection()
             cursor = conn.cursor()
-            cursor.execute("""INSERT INTO tipo_pqr (nombre,pqrs) \ VALUES (%s, %s)"""
-, (tipo_pqr.nombre, tipo_pqr.pqrs))
+            cursor.execute("INSERT INTO tipo_pqr (nombre,pqrs) \ VALUES (%s, %s)", (tipo_pqr.nombre, tipo_pqr.pqrs))
             conn.commit()
             conn.close()
             return {"resultado": "Tipo_pqr creado"}
