@@ -9,8 +9,8 @@ class Historial_estadoController:
         try:
             conn = get_db_connection()
             cursor = conn.cursor()
-            cursor.execute("INSERT INTO historial_estado (fecha ,id_incidencia,id_estado,estado)\
-            VALUES (%s, %s, %s, %s)", (historial_estado.fecha, historial_estado.id_incidencia, historial_estado.id_estado, historial_estado.estado))
+            cursor.execute("""INSERT INTO historial_estado (fecha ,id_incidencia,id_estado,estado) \ 
+            VALUES (%s, %s, %s, %s)""", (historial_estado.fecha, historial_estado.id_incidencia, historial_estado.id_estado, historial_estado.estado))
             conn.commit()
             conn.close()
             return {"resultado": "Historial_estado creado"}

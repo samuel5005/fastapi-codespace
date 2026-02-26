@@ -9,8 +9,8 @@ class UsuarioController:
         try:
             conn = get_db_connection()
             cursor = conn.cursor()
-            cursor.execute("INSERT INTO usuario (nombre,cedula,carrera,semestre,cargo,celular,correo,id_rol,rol)\ VALUES  "
-            "(%s, %s, %s, %s, %s ,%s,%s, %s ,%s)", (usuario.nombre, usuario.cedula, usuario.carrera, usuario.semestre, usuario.cargo, usuario.celular, usuario.correo, usuario.id_rol, usuario.rol))
+            cursor.execute("""INSERT INTO usuario (nombre,cedula,carrera,semestre,cargo,celular,correo,id_rol,rol) \ VALUES 
+            (%s, %s, %s, %s, %s , %s, %s, %s ,%s)""", (usuario.nombre, usuario.cedula, usuario.carrera, usuario.semestre, usuario.cargo, usuario.celular, usuario.correo, usuario.id_rol, usuario.rol))
             conn.commit()
             conn.close()
             return {"resultado": "Usuario creado"}
