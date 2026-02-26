@@ -1,16 +1,16 @@
 from fastapi import HTTPException
 from config.db_config import get_db_connection
-from models.pqr_model_model import Incidencia
+from models.pqr_model import Pqr
 from fastapi.encoders import jsonable_encoder
 
-class IncidenciaController:
+class PqrController:
         
-    def create_pqr(self, pqr: pqr):   
+    def create_pqr(self, pqr: Pqr):   
         try:
             conn = get_db_connection()
             cursor = conn.cursor()
-            cursor.execute("INSERT INTO pqr (fecha,descripcion,id_usuario,id_tipo,id_estado,id_departamento,id_prioridad,departamento,estado,prioridad,tipo_pqr)\
-             VALUES (%s, %s, %s, %s, %s ,%s, %s, %s, %s, %s ,%s)", (pqr.fecha, pqr.descripcion, pqr.id_usuario, pqr.id_tipo, pqr.id_estado, pqr.id_departamento, pqr.id_prioridad, pqr.departamento, pqr.estado, pqr.prioridad, pqr.tipo_pqr))
+            cursor.execute("INSERT INTO pqr (descripcion,fecha,id_usuario,id_tipo,id_estado,id_departamento,id_prioridad,evidencias,historial_estado,departamento,estado,prioridad,tipo_pqr,usuario,respuesta)\
+             VALUES (%s, %s, %s, %s, %s ,%s, %s, %s, %s, %s ,%s, %s, %s, %s ,%s)", (pqr.descripcion, pqr.fecha, pqr.id_usuario, pqr.id_tipo, pqr.id_estado, pqr.id_departamento, pqr.id_prioridad, pqr.evidencias, pqr.historial_estado, pqr.departamento, pqr.estado, pqr.prioridad, pqr.tipo_pqr, pqr.usuario, pqr.respuesta))
             conn.commit()
             conn.close()
             return {"resultado": "pqr creado"}
@@ -33,18 +33,22 @@ class IncidenciaController:
             content = {} 
             
             content={
-                    'id_pqr':int(result[0]),
-                    'fecha':data[1],
-                    'descripcion':data[2],
+                    'id_pqrs':data[0],
+                    'descripcion':data[1],
+                    'fecha':data[2],
                     'id_usuario':data[3],
                     'id_tipo':data[4],
                     'id_estado':data[5],
                     'id_departamento':data[6],
                     'id_prioridad':data[7],
-                    'departamento':data[8],
-                    'estado':data[9],
-                    'prioridad':data[10],
-                    'tipo_pqr':data[11]
+                    'evidencias':data[8],
+                    'historial_estado':data[9],
+                    'departamento':data[10],
+                    'estado':data[11],
+                    'prioridad':data[12],
+                    'tipo_pqr':data[13],
+                    'usuario':data[14],
+                    'respuesta':data[15]
                     
             }
             payload.append(content)
@@ -66,7 +70,7 @@ class IncidenciaController:
         finally:
             conn.close()
        
-    def get_pqr(self):
+    def get_pqrs(self):
         try:
             conn = get_db_connection()
             cursor = conn.cursor()
@@ -76,18 +80,22 @@ class IncidenciaController:
             content = {} 
             for data in result:
                 content={
-                    'id_pqr':data[0],
-                    'fecha':data[1],
-                    'descripcion':data[2],
+                    'id_pqrs':data[0],
+                    'descripcion':data[1],
+                    'fecha':data[2],
                     'id_usuario':data[3],
                     'id_tipo':data[4],
                     'id_estado':data[5],
                     'id_departamento':data[6],
                     'id_prioridad':data[7],
-                    'departamento':data[8],
-                    'estado':data[9],
-                    'prioridad':data[10],
-                    'tipo_pqr':data[11]
+                    'evidencias':data[8],
+                    'historial_estado':data[9],
+                    'departamento':data[10],
+                    'estado':data[11],
+                    'prioridad':data[12],
+                    'tipo_pqr':data[13],
+                    'usuario':data[14],
+                    'respuesta':data[15]
                 }
                 payload.append(content)
                 content = {}
@@ -105,3 +113,9 @@ class IncidenciaController:
     
     
 ##pqr_controller = pqrController()
+
+
+
+
+
+
