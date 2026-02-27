@@ -22,3 +22,11 @@ async def get_evidencia(evidencia_id: int):
 async def get_evidencias():
     rpta = nuevo_evidencia.get_evidencias()
     return rpta
+
+@router.put("/update_evidencia/{evidencia_id}")
+async def update_evidencia(evidencia_id: int, evidencia: Evidencia):
+    return nuevo_evidencia.update_evidencia(evidencia_id, evidencia)
+
+@router.delete("/delete_evidencia/{evidencia_id}")
+async def delete_evidencia(evidencia_id: int):
+    return nuevo_evidencia.delete_evidencia(evidencia_id)

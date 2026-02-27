@@ -22,3 +22,11 @@ async def get_pqr(pqr_id: int):
 async def get_pqrs():
     rpta = nuevo_pqr.get_pqrs()
     return rpta
+
+@router.put("/update_pqr/{pqr_id}")
+async def update_pqr(pqr_id: int, pqr: Pqr):
+    return nuevo_pqr.update_pqr(pqr_id, pqr)
+
+@router.delete("/delete_pqr/{pqr_id}")
+async def delete_pqr(pqr_id: int):
+    return nuevo_pqr.delete_pqr(pqr_id)

@@ -22,3 +22,11 @@ async def get_prioridad(prioridad_id: int):
 async def get_prioridades():
     rpta = nuevo_prioridad.get_prioridades()
     return rpta
+
+@router.put("/update_prioridad/{prioridad_id}")
+async def update_prioridad(prioridad_id: int, prioridad: Prioridad):
+    return nuevo_prioridad.update_prioridad(prioridad_id, prioridad)
+
+@router.delete("/delete_prioridad/{prioridad_id}")
+async def delete_prioridad(prioridad_id: int):
+    return nuevo_prioridad.delete_prioridad(prioridad_id)

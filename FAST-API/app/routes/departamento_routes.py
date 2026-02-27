@@ -22,3 +22,11 @@ async def get_departamento(departamento_id: int):
 async def get_departamentos():
     rpta = nuevo_departamento.get_departamentos()
     return rpta
+
+@router.put("/update_departamento/{departamento_id}")
+async def update_departamento(departamento_id: int, departamento: Departamento):
+    return nuevo_departamento.update_departamento(departamento_id, departamento)
+
+@router.delete("/delete_departamento/{departamento_id}")
+async def delete_departamento(departamento_id: int):
+    return nuevo_departamento.delete_departamento(departamento_id)

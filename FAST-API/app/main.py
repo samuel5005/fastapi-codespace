@@ -5,8 +5,7 @@ from routes.tipo_pqr_routes import router as tipo_pqr_router
 from routes.rol_routes import router as rol_router
 from routes.respuesta_routes import router as respuesta_router
 from routes.prioridad_routes import router as prioridad_router
-from routes.incidencia_routes import router as incidencia_router
-from routes.historial_routes import router as historial_router
+from routes.historial_estado_routes import router as historial_router
 from routes.pqr_routes import router as pqr_router
 from routes.estado_routes import router as estado_router
 from routes.departamento_routes import router as departamento_router
@@ -35,7 +34,6 @@ app.include_router(tipo_pqr_routes)
 app.include_router(rol_routes)
 app.include_router(respuesta_routes)
 app.include_router(prioridad_routes)
-app.include_router(incidencia_routes)
 app.include_router(historial_routes)
 app.include_router(pqr_routes)
 app.include_router(estado_routes)

@@ -22,3 +22,4 @@ async def get_user(user_id: int):
 async def get_users():
     rpta = nuevo_usuario.get_users()
     return rpta
+

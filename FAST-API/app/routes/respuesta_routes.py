@@ -22,3 +22,11 @@ async def get_respuesta(Respuesta_id: int):
 async def get_respuestas():
     rpta = nuevo_respuesta.get_respuestas()
     return rpta
+
+@router.put("/update_respuesta/{respuesta_id}")
+async def update_respuesta(respuesta_id: int, respuesta: Respuesta):
+    return nuevo_respuesta.update_respuesta(respuesta_id, respuesta)
+
+@router.delete("/delete_respuesta/{respuesta_id}")
+async def delete_respuesta(respuesta_id: int):
+    return nuevo_respuesta.delete_respuesta(respuesta_id)

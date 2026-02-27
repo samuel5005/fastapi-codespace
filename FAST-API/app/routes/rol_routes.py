@@ -22,3 +22,11 @@ async def get_rol(rol_id: int):
 async def get_roles():
     rpta = nuevo_rol.get_roles()
     return rpta
+
+@router.put("/update_rol/{rol_id}")
+async def update_rol(rol_id: int, rol: Rol):
+    return nuevo_rol.update_rol(rol_id, rol)
+
+@router.delete("/delete_rol/{rol_id}")
+async def delete_rol(rol_id: int):
+    return nuevo_rol.delete_rol(rol_id)

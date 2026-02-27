@@ -22,3 +22,12 @@ async def get_estado(estado_id: int):
 async def get_estados():
     rpta = nuevo_estado.get_estados()
     return rpta
+
+@router.put("/update_estado/{estado_id}")
+async def update_estado(estado_id: int, estado: Estado):
+    return nuevo_estado.update_estado(estado_id, estado)
+
+@router.delete("/delete_estado/{estado_id}")
+async def delete_estado(estado_id: int):
+    return nuevo_estado.delete_estado(estado_id)
+
