@@ -1,19 +1,19 @@
 from fastapi import APIRouter, HTTPException
-from controllers.priodridad_controller import *
-from models.prioridad_model import prioridad
+from controllers.prioridad_controller import *
+from models.prioridad_model import Prioridad
 
 router = APIRouter()
 
-nuevo_prioridad = prioridadController()
+nuevo_prioridad = PrioridadController()
 
 
 @router.post("/create_prioridad")
-async def create_prioridad(prioridad: prioridad):
+async def create_prioridad(prioridad: Prioridad):
     rpta = nuevo_prioridad.create_prioridad(prioridad)
     return rpta
 
 
-@router.get("/get_prioridad/{prioridad_id}",response_model=prioridad)
+@router.get("/get_prioridad/{prioridad_id}",response_model=Prioridad)
 async def get_prioridad(prioridad_id: int):
     rpta = nuevo_prioridad.get_prioridad(prioridad_id)
     return rpta

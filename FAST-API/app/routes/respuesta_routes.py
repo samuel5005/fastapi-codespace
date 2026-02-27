@@ -1,10 +1,10 @@
 from fastapi import APIRouter, HTTPException
-from controllers.Respuesta_controller import *
-from models.Respuesta_model import User
+from controllers.respuesta_controller import *
+from models.respuesta_model import Respuesta
 
 router = APIRouter()
 
-nuevo_respuesta = respuestaController()
+nuevo_respuesta = RespuestaController()
 
 
 @router.post("/create_respuesta")

@@ -1,19 +1,19 @@
 from fastapi import APIRouter, HTTPException
 from controllers.estado_controller import *
-from models.estado_model import estado
+from models.estado_model import Estado
 
 router = APIRouter()
 
-nuevo_estado = estadoController()
+nuevo_estado = EstadoController()
 
 
 @router.post("/create_estado")
-async def create_estado(estado: estado):
+async def create_estado(estado: Estado):
     rpta = nuevo_estado.create_estado(estado)
     return rpta
 
 
-@router.get("/get_estado/{estado_id}",response_model=estado)
+@router.get("/get_estado/{estado_id}",response_model=Estado)
 async def get_estado(estado_id: int):
     rpta = nuevo_estado.get_estado(estado_id)
     return rpta

@@ -1,6 +1,6 @@
 from fastapi import APIRouter, HTTPException
 from controllers.usuario_controller import *
-from models.usuario_model import usuario
+from models.usuario_model import Usuario
 
 router = APIRouter()
 
