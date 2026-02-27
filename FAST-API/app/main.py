@@ -1,5 +1,4 @@
 from fastapi import FastAPI
-from routes.user_routes import router as user_router
 from routes.usuario_routes import router as usuario_router
 from routes.tipo_pqr_routes import router as tipo_pqr_router
 from routes.rol_routes import router as rol_router
@@ -28,7 +27,7 @@ app.add_middleware(
     allow_headers=["*"],
 )
 
-app.include_router(user_router)
+
 app.include_router(usuario_router)
 app.include_router(tipo_pqr_router)
 app.include_router(rol_router)
