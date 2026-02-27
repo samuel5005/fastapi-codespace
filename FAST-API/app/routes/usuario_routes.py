@@ -4,7 +4,7 @@ from models.usuario_model import usuario
 
 router = APIRouter()
 
-nuevo_usuario = usuarioController()
+nuevo_usuario = UsuarioController()
 
 
 @router.post("/create_usuario")
