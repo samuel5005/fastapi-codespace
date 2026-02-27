@@ -13,9 +13,7 @@ from fastapi.middleware.cors import CORSMiddleware
 app = FastAPI()
 
 
-@app.get("/")
-def inicio():
-    return {"mensaje": "Servidor funcionando correctamente"}
+
 
 
 origins = [
