@@ -27,10 +27,11 @@ class UsuarioController:
         try:
             conn = get_db_connection()
             cursor = conn.cursor()
-            cursor.execute("SELECT * FROM usuario WHERE id = %s", (usuario_id,))
+            cursor.execute("SELECT * FROM usuario WHERE id_usuario = %s", (usuario_id,))
             result = cursor.fetchone()
-            payload = []
-            content = {} 
+            
+            if not result:
+             raise HTTPException(status_code=404, detail="Usuario no encontrado")
 
 
             content={
@@ -45,23 +46,14 @@ class UsuarioController:
                     'id_rol':result[8]
                     
             }
-            payload.append(content)
-            json_data = jsonable_encoder(content)            
-            if result:
-               return  json_data
-            else:
-                ##Esto interrumpe la ejecución y responde al cliente con un código 404
-                ## comunica al cliente de la API qué pasó (error HTTP).
-                ##código 404,comportamiento correcto según las reglas HTTP
-                raise HTTPException(status_code=404, detail="User not found")  
-                
+            return jsonable_encoder(content)
+        except HTTPException:
+           raise
         except psycopg2.Error as err:
-            print(err)
-            # Se usa para deshacer los cambios de la transacción activa cuando ocurre un error en el try.
-            ##Maneja el estado de la transacción en la base de datos.Si un INSERT, UPDATE o DELETE falla dentro de una transacción, rollback() revierte esos cambios.
-            conn.rollback()
+          print(err)
+          conn.rollback()
         finally:
-            conn.close()
+             conn.close()
             
        
     def get_usuarios(self):
