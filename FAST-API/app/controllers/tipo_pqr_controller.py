@@ -25,6 +25,7 @@ class Tipo_pqrController:
 
     def get_tipo_pqr(self, tipo_pqr_id: int):
     try:
+
         conn = get_db_connection()
         cursor = conn.cursor()
         cursor.execute("SELECT * FROM tipo_pqr WHERE id_tipo = %s", (tipo_pqr_id,))
