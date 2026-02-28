@@ -50,3 +50,15 @@ password= "npg_IBaq6Q3cgJvl"
 host= "ep-billowing-smoke-ai5rf94d-pooler.c-4.us-east-1.aws.neon.tech"
 puerto= 5432
 
+
+ACTUALIZAR
+git pull origin
+
+
+ANTES
+git pull
+
+DESPUES
+git add .
+git commit -m "Lo que hice"
+git push
