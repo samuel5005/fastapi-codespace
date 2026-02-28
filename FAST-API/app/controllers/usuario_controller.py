@@ -10,16 +10,15 @@ class UsuarioController:
         try:
             conn = get_db_connection()
             cursor = conn.cursor()
-            cursor.execute("""INSERT INTO usuario (nombre,cedula,carrera,semestre,cargo,celular,correo,id_rol) \ VALUES 
+            cursor.execute("""INSERT INTO usuario (nombre,cedula,carrera,semestre,cargo,celular,correo,id_rol)  VALUES 
             (%s, %s, %s, %s, %s , %s, %s, %s)""", (usuario.nombre, usuario.cedula, usuario.carrera, usuario.semestre, usuario.cargo, usuario.celular, usuario.correo, usuario.id_rol))
             conn.commit()
-            conn.close()
             return {"resultado": "Usuario creado"}
         except psycopg2.Error as err:
-            print(err)
+            conn.rollback()
+            print(err) 
             # Si falla el INSERT, los datos no quedan guardados parcialmente en la base de datos
             # Se usa para deshacer los cambios de la transacción activa cuando ocurre un error en el try.
-            conn.rollback()
         finally:
             conn.close()
         
