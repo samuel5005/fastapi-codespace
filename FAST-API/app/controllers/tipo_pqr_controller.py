@@ -1,3 +1,4 @@
+import psycopg2
 from fastapi import HTTPException
 from config.db_config import get_db_connection
 from models.tipo_pqr_model import Tipo_pqr
