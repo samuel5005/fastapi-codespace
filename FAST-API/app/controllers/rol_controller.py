@@ -28,14 +28,14 @@ class RolController:
         try:
             conn = get_db_connection()
             cursor = conn.cursor()
-            cursor.execute("SELECT * FROM rol WHERE id_rol = %s", (rol_id,))
+            cursor.execute("SELECT * FROM rol WHERE id_ = %s", (rol_id,))
             result = cursor.fetchone()
             payload = []
             content = {} 
             
             content={
                     'id_rol':int(result[0]),
-                    'nombre':result[1]
+                    'nombre_rol':result[1]
                     
             }
             payload.append(content)
