@@ -116,14 +116,17 @@ class UsuarioController:
             conn.close()
 
     def delete_usuario(self, usuario_id: int):
+        conn = get_db_connection()
         try:
-            conn = get_db_connection()
+            
             cursor = conn.cursor()
-            cursor.execute("DELETE FROM usuario WHERE id = %s", (usuario_id,))
+            cursor.execute("DELETE FROM usuario WHERE id_usuario = %s", (usuario_id,))
             conn.commit()
             if cursor.rowcount == 0:
                 raise HTTPException(status_code=404, detail="Usuario no encontrado")
             return {"resultado": "Usuario eliminado"}
+        except HTTPException:
+            raise
         except psycopg2.Error as err:
             print(err)
             conn.rollback()
