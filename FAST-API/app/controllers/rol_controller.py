@@ -11,7 +11,7 @@ class RolController:
             conn = get_db_connection()
             cursor = conn.cursor()
             cursor.execute("INSERT INTO rol (nombre) \
-            VALUES (%s)", (rol.nombre,))
+            VALUES (%s)", (rol.nombre_rol,))
             conn.commit()
             conn.close()
             return {"resultado": "Rol creado"}
