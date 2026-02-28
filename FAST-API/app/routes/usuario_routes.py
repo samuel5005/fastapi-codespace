@@ -9,7 +9,7 @@ nuevo_usuario = UsuarioController()
 
 @router.post("/create_usuario")
 async def create_usuario(usuario: Usuario):
-    rpta = nuevo_usuario.create_usuaio(usuario)
+    rpta = nuevo_usuario.create_usuario(usuario)
     return rpta
 
 
