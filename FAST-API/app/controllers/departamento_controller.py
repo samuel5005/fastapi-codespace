@@ -1,3 +1,4 @@
+import psycopg2
 from fastapi import HTTPException
 from config.db_config import get_db_connection
 from models.departamento_model import Departamento
@@ -33,9 +34,9 @@ class DepartamentoController:
             content = {} 
             
             content={
-                    'id_departamento':data[0],
-                    'nombre':data[1],
-                    'pqrs':data[2]
+                    'id_departamento':result[0],
+                    'nombre':result[1],
+                    'pqrs':result[2]
             }
             payload.append(content)
             

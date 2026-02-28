@@ -1,3 +1,4 @@
+import psycopg2
 from fastapi import HTTPException
 from config.db_config import get_db_connection
 from models.evidencia_model import Evidencia
@@ -10,7 +11,7 @@ class EvidenciaController:
             conn = get_db_connection()
             cursor = conn.cursor()
             cursor.execute("""INSERT INTO evidencia (nombre_archivo,tipo_archivo,url,id_incidencia) \ VALUES 
-            (%s, %s, %s, %s)""", (evidencias.nombre_archivo, evidencias.tipo_archivo, evidencias.url, evidencias.id_incidencia))
+            (%s, %s, %s, %s)""", (evidencia.nombre_archivo, evidencia.tipo_archivo, evidencia.url, evidencia.id_incidencia))
             conn.commit()
             conn.close()
             return {"resultado": "Evidencia creado"}
@@ -33,10 +34,10 @@ class EvidenciaController:
             content = {} 
             
             content={
-                    'id_evidencia':data[0],
-                    'nombre_archivo':data[1],
-                    'url':data[3],
-                    'id_pqr':data[4]
+                    'id_evidencia':result[0],
+                    'nombre_archivo':result[1],
+                    'url':result[3],
+                    'id_pqr':result[4]
             }
             payload.append(content)
             

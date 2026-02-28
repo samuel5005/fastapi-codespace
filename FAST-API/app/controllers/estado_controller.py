@@ -1,3 +1,4 @@
+import psycopg2
 from fastapi import HTTPException
 from config.db_config import get_db_connection
 from models.estado_model import Estado
@@ -33,8 +34,8 @@ class EstadoController:
             content = {} 
             
             content={
-                    'id_estado':data[0],
-                    'nombre':data[1],
+                    'id_estado':result[0],
+                    'nombre':result[1],
                    
             }
             payload.append(content)

@@ -1,3 +1,4 @@
+import psycopg2
 from fastapi import HTTPException
 from config.db_config import get_db_connection
 from models.historial_estado_model import Historial_estado
@@ -34,10 +35,10 @@ class Historial_estadoController:
             
             content={
                     'id_historial':int(result[0]),
-                    'fecha':data[1],
-                    'id_incidencia':data[2],
-                    'id_estado':data[3],
-                    'estado':data[4]
+                    'fecha':result[1],
+                    'id_incidencia':result[2],
+                    'id_estado':result[3]
+                    
             }
             payload.append(content)
             
