@@ -1,5 +1,5 @@
 from pydantic import BaseModel
-from Optional import Optional
+
 
 
 class Usuario(BaseModel):
@@ -8,7 +8,7 @@ class Usuario(BaseModel):
     cedula:str
     carrera:str
     semestre:int
-    cargo: Optional[str] = None 
+    cargos:str
     celular:str
     correo:str
     id_rol:int
