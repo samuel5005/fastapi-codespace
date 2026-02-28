@@ -4,12 +4,12 @@ from typing import Optional
 
 class Usuario(BaseModel):
     id_usuario: Optional[int] =None
-    nombre: str
-    cedula:str
-    carrera:str
-    semestre:int
+    nombre: Optional[str] =None
+    cedula: Optional[str] =None
+    carrera: Optional[str] =None
+    semestre: Optional[int] =None
     cargo: Optional [str] = None
-    celular:str
-    correo:str
-    id_rol:int
+    celular: Optional[str] =None
+    correo: Optional[str] =None
+    id_rol: Optional[int] =None
   
