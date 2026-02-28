@@ -33,7 +33,7 @@ class UsuarioController:
             payload = []
             content = {} 
 
-            
+
             content={
                     'id_usuario':int(result[0]),
                     'nombre':result[1],
