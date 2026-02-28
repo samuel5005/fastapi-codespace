@@ -100,8 +100,9 @@ class UsuarioController:
             conn.close()
 
     def update_usuario(self, usuario_id: int, usuario: Usuario):
+        conn = get_db_connection()
         try:
-            conn = get_db_connection()
+            
             cursor = conn.cursor()
             cursor.execute("""
                 UPDATE usuario
@@ -114,6 +115,8 @@ class UsuarioController:
             if cursor.rowcount == 0:
                 raise HTTPException(status_code=404, detail="Usuario no encontrado")
             return {"resultado": "Usuario actualizado"}
+        except HTTPException:
+            raise
         except psycopg2.Error as err:
             print(err)
             conn.rollback()
