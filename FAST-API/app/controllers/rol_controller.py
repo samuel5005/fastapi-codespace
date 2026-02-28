@@ -91,8 +91,8 @@ class RolController:
             cursor = conn.cursor()
             cursor.execute("""
                 UPDATE rol
-                SET nombre = %s
-                WHERE id = %s
+                SET nombre_rol = %s
+                WHERE id_rol = %s
             """, (rol.nombre_rol,rol_id,))
             conn.commit()
             if cursor.rowcount == 0:
