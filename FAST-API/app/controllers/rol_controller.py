@@ -28,7 +28,7 @@ class RolController:
         try:
             conn = get_db_connection()
             cursor = conn.cursor()
-            cursor.execute("SELECT * FROM rol WHERE id_ = %s", (rol_id,))
+            cursor.execute("SELECT * FROM rol WHERE id_ rol= %s", (rol_id,))
             result = cursor.fetchone()
             payload = []
             content = {} 
