@@ -10,8 +10,10 @@ class EvidenciaController:
         try:
             conn = get_db_connection()
             cursor = conn.cursor()
-            cursor.execute("""INSERT INTO evidencia (nombre_archivo,url,id_pqr) VALUES 
-            (%s, %s, %s)""", (evidencia.nombre_archivo, evidencia.url, evidencia.id_pqr))
+             cursor.execute("""
+            INSERT INTO evidencia (nombre_archivo, url, id_pqr)
+            VALUES (%s, %s, %s)
+        """, (evidencia.nombre_archivo, evidencia.url, evidencia.id_pqr))
             conn.commit()
             conn.close()
             return {"resultado": "Evidencia creado"}
