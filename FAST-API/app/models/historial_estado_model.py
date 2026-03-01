@@ -1,9 +1,9 @@
 from pydantic import BaseModel
-from datetime import datetime
-from typing import Optional
+from datetime import date
 
 class Historial_estado(BaseModel):
-    id_historial: Optional[int] = None
-    fecha: Optional[datetime] = None
-    id_pqr: int
+    id_historial: int=None
+    fecha: date
+    id_pqrs: int
     id_estado: int
+   
