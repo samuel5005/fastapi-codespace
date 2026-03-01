@@ -16,6 +16,7 @@ class RespuestaController:
             conn.close()
             return {"resultado": "Respuesta creado"}
         except psycopg2.Error as err:
+            conn.rollback()
             print(err)
             # Si falla el INSERT, los datos no quedan guardados parcialmente en la base de datos
             # Se usa para deshacer los cambios de la transacción activa cuando ocurre un error en el try.
@@ -28,7 +29,7 @@ class RespuestaController:
         try:
             conn = get_db_connection()
             cursor = conn.cursor()
-            cursor.execute("SELECT * FROM respuesta WHERE id = %s", (respuesta_id,))
+            cursor.execute("SELECT * FROM respuesta WHERE id_respuesta = %s", (respuesta_id,))
             result = cursor.fetchone()
             payload = []
             content = {} 
@@ -98,7 +99,7 @@ class RespuestaController:
             cursor.execute("""
                 UPDATE respuesta
                 SET mensaje = %s, fecha = %s, id_pqr = %s, id_usuario = %s
-                WHERE id = %s
+                WHERE id_respuesta = %s
             """, (respuesta.mensaje, respuesta.fecha, respuesta.id_pqr, respuesta.id_usuario, respuesta_id))
             conn.commit()
             if cursor.rowcount == 0:
@@ -114,7 +115,7 @@ class RespuestaController:
         try:
             conn = get_db_connection()
             cursor = conn.cursor()
-            cursor.execute("DELETE FROM respuesta WHERE id = %s", (respuesta_id,))
+            cursor.execute("DELETE FROM respuesta WHERE id_respuesta = %s", (respuesta_id,))
             conn.commit()
             if cursor.rowcount == 0:
                 raise HTTPException(status_code=404, detail="Respuesta no encontrada")
