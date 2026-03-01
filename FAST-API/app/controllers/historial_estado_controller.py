@@ -13,13 +13,13 @@ class Historial_estadoController:
             cursor.execute("""INSERT INTO historial_estado (fecha ,id_pqrs,id_estado) 
             VALUES (%s, %s, %s)""", (historial_estado.fecha, historial_estado.id_pqrs, historial_estado.id_estado))
             conn.commit()
-            conn.close()
             return {"resultado": "Historial_estado creado"}
         except psycopg2.Error as err:
             print(err)
             # Si falla el INSERT, los datos no quedan guardados parcialmente en la base de datos
             # Se usa para deshacer los cambios de la transacción activa cuando ocurre un error en el try.
             conn.rollback()
+            return {"error": str(err)}
         finally:
             conn.close()
         
@@ -56,6 +56,7 @@ class Historial_estadoController:
             # Se usa para deshacer los cambios de la transacción activa cuando ocurre un error en el try.
             ##Maneja el estado de la transacción en la base de datos.Si un INSERT, UPDATE o DELETE falla dentro de una transacción, rollback() revierte esos cambios.
             conn.rollback()
+
         finally:
             conn.close()
        
