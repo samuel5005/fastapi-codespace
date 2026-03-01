@@ -56,7 +56,6 @@ class Historial_estadoController:
             # Se usa para deshacer los cambios de la transacción activa cuando ocurre un error en el try.
             ##Maneja el estado de la transacción en la base de datos.Si un INSERT, UPDATE o DELETE falla dentro de una transacción, rollback() revierte esos cambios.
             conn.rollback()
-            return {"error": str(err)}
         finally:
             conn.close()
        
