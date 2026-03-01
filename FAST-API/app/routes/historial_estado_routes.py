@@ -13,7 +13,7 @@ async def create_historial_estado(historial_estado: Historial_estado):
     return rpta
 
 
-@router.get("/get_historial_estado/{historial_estado_id}",response_model=Historial_estado)
+@router.get("/get_historial_estado/{historial_estado_id}")
 async def get_historial_estado(historial_estado_id: int):
     rpta = nuevo_historial_estado.get_historial_estado(historial_estado_id)
     return rpta
