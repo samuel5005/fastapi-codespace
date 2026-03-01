@@ -22,11 +22,9 @@ class Tipo_pqrController:
         finally:
             conn.close()
         
-
-    def get_tipo_pqr(self, tipo_pqr_id: int):
+def get_tipo_pqr(self, tipo_pqr_id: int):
+    conn = get_db_connection()
     try:
-
-        conn = get_db_connection()
         cursor = conn.cursor()
         cursor.execute("SELECT * FROM tipo_pqr WHERE id_tipo = %s", (tipo_pqr_id,))
         result = cursor.fetchone()
@@ -38,18 +36,18 @@ class Tipo_pqrController:
             'id_tipo': int(result[0]),
             'nombre': result[1]
         }
-
         return jsonable_encoder(content)
 
+    except HTTPException:
+        raise
     except psycopg2.Error as err:
         print(err)
         conn.rollback()
         raise HTTPException(status_code=500, detail="Error en base de datos")
-
     finally:
         conn.close()
        
-    def get_tipo_pqrs(self):
+def get_tipo_pqrs(self):
         try:
             conn = get_db_connection()
             cursor = conn.cursor()
@@ -78,7 +76,7 @@ class Tipo_pqrController:
         finally:
             conn.close()
 
-    def update_tipo_pqr(self, tipo_pqr_id: int, tipo_pqr: Tipo_pqr):
+def update_tipo_pqr(self, tipo_pqr_id: int, tipo_pqr: Tipo_pqr):
         try:
             conn = get_db_connection()
             cursor = conn.cursor()
@@ -97,7 +95,7 @@ class Tipo_pqrController:
         finally:
             conn.close()
 
-    def delete_tipo_pqr(self, tipo_pqr_id: int):
+def delete_tipo_pqr(self, tipo_pqr_id: int):
         try:
             conn = get_db_connection()
             cursor = conn.cursor()
