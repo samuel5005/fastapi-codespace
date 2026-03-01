@@ -10,8 +10,8 @@ class EvidenciaController:
         try:
             conn = get_db_connection()
             cursor = conn.cursor()
-            cursor.execute("""INSERT INTO evidencia (nombre_archivo,tipo_archivo,url,id_incidencia) \ VALUES 
-            (%s, %s, %s, %s)""", (evidencia.nombre_archivo, evidencia.tipo_archivo, evidencia.url, evidencia.id_incidencia))
+            cursor.execute("""INSERT INTO evidencia (nombre_archivo,url,id_pqr) \ VALUES 
+            (%s, %s, %s)""", (evidencia.nombre_archivo, evidencia.url, evidencia.id_pqr))
             conn.commit()
             conn.close()
             return {"resultado": "Evidencia creado"}
@@ -28,7 +28,7 @@ class EvidenciaController:
         try:
             conn = get_db_connection()
             cursor = conn.cursor()
-            cursor.execute("SELECT * FROM evidencia WHERE id = %s", (evidencia_id,))
+            cursor.execute("SELECT * FROM evidencia WHERE id_evidencia = %s", (evidencia_id,))
             result = cursor.fetchone()
             payload = []
             content = {} 
@@ -36,8 +36,8 @@ class EvidenciaController:
             content={
                     'id_evidencia':result[0],
                     'nombre_archivo':result[1],
-                    'url':result[3],
-                    'id_pqr':result[4]
+                    'url':result[2],
+                    'id_pqr':result[3]
             }
             payload.append(content)
             
@@ -70,8 +70,8 @@ class EvidenciaController:
                 content={
                     'id_evidencia':data[0],
                     'nombre_archivo':data[1],
-                    'url':data[3],
-                    'id_pqr':data[4]
+                    'url':data[2],
+                    'id_pqr':data[3]
                 }
                 payload.append(content)
                 content = {}
@@ -93,9 +93,9 @@ class EvidenciaController:
             cursor = conn.cursor()
             cursor.execute("""
                 UPDATE evidencia
-                SET nombre_archivo = %s, url = %s, id_pqr = %s, pqrs = %s
-                WHERE id = %s
-            """, (evidencia.nombre_archivo, evidencia.url, evidencia.id_pqr, evidencia.pqrs, evidencia_id))
+                SET nombre_archivo = %s, url = %s, id_pqr = %s
+                WHERE id_evidencia = %s
+            """, (evidencia.nombre_archivo, evidencia.url, evidencia.id_pqr, evidencia_id))
             conn.commit()
             if cursor.rowcount == 0:
                 raise HTTPException(status_code=404, detail="Evidencia no encontrada")
@@ -110,7 +110,7 @@ class EvidenciaController:
         try:
             conn = get_db_connection()
             cursor = conn.cursor()
-            cursor.execute("DELETE FROM evidencia WHERE id = %s", (evidencia_id,))
+            cursor.execute("DELETE FROM evidencia WHERE id_evidencia = %s", (evidencia_id,))
             conn.commit()
             if cursor.rowcount == 0:
                 raise HTTPException(status_code=404, detail="Evidencia no encontrada")
