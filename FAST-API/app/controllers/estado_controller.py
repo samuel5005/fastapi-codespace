@@ -10,8 +10,8 @@ class EstadoController:
         try:
             conn = get_db_connection()
             cursor = conn.cursor()
-            cursor.execute("INSERT INTO estado (nombre,historial_estados,incidencias) \
-            VALUES (%s, %s, %s)", (estado.nombre, estado.historial_estados, estado.incidencias))
+            cursor.execute("INSERT INTO estado (nombre) \
+            VALUES (%s)", (estado.nombre,))
             conn.commit()
             conn.close()
             return {"resultado": "Estado creado"}
@@ -28,14 +28,14 @@ class EstadoController:
         try:
             conn = get_db_connection()
             cursor = conn.cursor()
-            cursor.execute("SELECT * FROM estado WHERE id = %s", (estado_id,))
+            cursor.execute("SELECT * FROM estado WHERE id_estado = %s", (estado_id,))
             result = cursor.fetchone()
             payload = []
             content = {} 
             
             content={
                     'id_estado':result[0],
-                    'nombre':result[1],
+                    'nombre':result[1]
                    
             }
             payload.append(content)
@@ -68,7 +68,7 @@ class EstadoController:
             for data in result:
                 content={
                     'id_estado':data[0],
-                    'nombre':data[1],
+                    'nombre':data[1]
                     
                    
                 }
@@ -92,9 +92,9 @@ class EstadoController:
             cursor = conn.cursor()
             cursor.execute("""
                 UPDATE estado
-                SET nombre = %s, historial_estados = %s, pqrs = %s
-                WHERE id = %s
-            """, (estado.nombre, estado.historial_estados, estado.pqrs, estado_id))
+                SET nombre = %s
+                WHERE id_estado = %s
+            """, (estado.nombre,estado_id))
             conn.commit()
             if cursor.rowcount == 0:
                 raise HTTPException(status_code=404, detail="Estado no encontrado")
@@ -109,7 +109,7 @@ class EstadoController:
         try:
             conn = get_db_connection()
             cursor = conn.cursor()
-            cursor.execute("DELETE FROM estado WHERE id = %s", (estado_id,))
+            cursor.execute("DELETE FROM estado WHERE id_estado = %s", (estado_id,))
             conn.commit()
             if cursor.rowcount == 0:
                 raise HTTPException(status_code=404, detail="Estado no encontrado")
