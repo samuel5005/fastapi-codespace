@@ -94,7 +94,7 @@ class EstadoController:
                 UPDATE estado
                 SET nombre = %s
                 WHERE id_estado = %s
-            """, (estado.nombre,))
+            """, (estado.nombre,estado_id))
             conn.commit()
             if cursor.rowcount == 0:
                 raise HTTPException(status_code=404, detail="Estado no encontrado")
