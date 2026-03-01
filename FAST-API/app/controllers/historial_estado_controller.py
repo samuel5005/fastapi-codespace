@@ -28,7 +28,7 @@ class Historial_estadoController:
         try:
             conn = get_db_connection()
             cursor = conn.cursor()
-            cursor.execute("SELECT * FROM historial_estado WHERE id = %s", (historial_estado_id,))
+            cursor.execute("SELECT * FROM historial_estado WHERE id_historial = %s", (historial_estado_id,))
             result = cursor.fetchone()
             payload = []
             content = {} 
@@ -36,7 +36,7 @@ class Historial_estadoController:
             content={
                     'id_historial':int(result[0]),
                     'fecha':result[1],
-                    'id_incidencia':result[2],
+                    'id_pqr':result[2],
                     'id_estado':result[3]
                     
             }
