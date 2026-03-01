@@ -10,8 +10,8 @@ class DepartamentoController:
         try:
             conn = get_db_connection()
             cursor = conn.cursor()
-            cursor.execute("""INSERT INTO departamento (nombre,pqrs) 
-            VALUES (%s, %s)""", (departamento.nombre, departamento.pqrs))
+            cursor.execute("""INSERT INTO departamento (nombre) 
+            VALUES (%s)""", (departamento.nombre,))
             conn.commit()
             conn.close()
             return {"resultado": "Departamento creado"}
@@ -28,15 +28,14 @@ class DepartamentoController:
         try:
             conn = get_db_connection()
             cursor = conn.cursor()
-            cursor.execute("SELECT * FROM departamento WHERE id = %s", (departamento_id,))
+            cursor.execute("SELECT * FROM departamento WHERE id_departamento = %s", (departamento_id,))
             result = cursor.fetchone()
             payload = []
             content = {} 
             
             content={
                     'id_departamento':result[0],
-                    'nombre':result[1],
-                    'pqrs':result[2]
+                    'nombre':result[1]
             }
             payload.append(content)
             
@@ -68,7 +67,7 @@ class DepartamentoController:
             for data in result:
                 content={
                     'id_departamento':data[0],
-                    'nombre':data[1],
+                    'nombre':data[1]
                    
                     
                 }
@@ -92,9 +91,9 @@ class DepartamentoController:
             cursor = conn.cursor()
             cursor.execute("""
                 UPDATE departamento
-                SET nombre = %s, pqrs = %s
-                WHERE id = %s
-            """, (departamento.nombre, departamento.pqrs, departamento_id))
+                SET nombre = %s
+                WHERE id_departamento = %s
+            """, (departamento.nombre, departamento_id))
             conn.commit()
             if cursor.rowcount == 0:
                 raise HTTPException(status_code=404, detail="Departamento no encontrado")
@@ -109,7 +108,7 @@ class DepartamentoController:
         try:
             conn = get_db_connection()
             cursor = conn.cursor()
-            cursor.execute("DELETE FROM departamento WHERE id = %s", (departamento_id,))
+            cursor.execute("DELETE FROM departamento WHERE id_departamento = %s", (departamento_id,))
             conn.commit()
             if cursor.rowcount == 0:
                 raise HTTPException(status_code=404, detail="Departamento no encontrado")
