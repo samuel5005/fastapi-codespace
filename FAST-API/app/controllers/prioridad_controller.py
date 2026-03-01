@@ -28,7 +28,7 @@ class PrioridadController:
         try:
             conn = get_db_connection()
             cursor = conn.cursor()
-            cursor.execute("SELECT * FROM prioridad WHERE id = %s", (prioridad_id,))
+            cursor.execute("SELECT * FROM prioridad WHERE id_prioridad = %s", (prioridad_id,))
             result = cursor.fetchone()
             payload = []
             content = {} 
@@ -92,7 +92,7 @@ class PrioridadController:
             cursor.execute("""
                 UPDATE prioridad
                 SET nombre = %s
-                WHERE id = %s
+                WHERE id_prioridad = %s
             """, (prioridad.nombre, prioridad_id))
             conn.commit()
             if cursor.rowcount == 0:
@@ -108,7 +108,7 @@ class PrioridadController:
         try:
             conn = get_db_connection()
             cursor = conn.cursor()
-            cursor.execute("DELETE FROM prioridad WHERE id = %s", (prioridad_id,))
+            cursor.execute("DELETE FROM prioridad WHERE id_prioridad = %s", (prioridad_id,))
             conn.commit()
             if cursor.rowcount == 0:
                 raise HTTPException(status_code=404, detail="Prioridad no encontrada")
