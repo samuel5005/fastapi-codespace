@@ -10,8 +10,8 @@ class PqrController:
         try:
             conn = get_db_connection()
             cursor = conn.cursor()
-            cursor.execute("INSERT INTO pqr (descripcion,fecha,id_usuario,id_tipo,id_estado,id_departamento,id_prioridad,evidencias,historial_estado,departamento,estado,prioridad,tipo_pqr,usuario,respuesta)\
-             VALUES (%s, %s, %s, %s, %s ,%s, %s, %s, %s, %s ,%s, %s, %s, %s ,%s)", (pqr.descripcion, pqr.fecha, pqr.id_usuario, pqr.id_tipo, pqr.id_estado, pqr.id_departamento, pqr.id_prioridad, pqr.evidencias, pqr.historial_estado, pqr.departamento, pqr.estado, pqr.prioridad, pqr.tipo_pqr, pqr.usuario, pqr.respuesta))
+            cursor.execute("INSERT INTO pqr (descripcion,fecha,id_usuario,id_tipo,id_estado,id_departamento,id_prioridad)\
+             VALUES (%s, %s, %s, %s, %s ,%s, %s)", (pqr.descripcion, pqr.fecha, pqr.id_usuario, pqr.id_tipo, pqr.id_estado, pqr.id_departamento, pqr.id_prioridad))
             conn.commit()
             conn.close()
             return {"resultado": "pqr creado"}
@@ -34,7 +34,7 @@ class PqrController:
             content = {} 
             
             content={
-                    'id_pqrs':result[0],
+                    'id_pqr':result[0],
                     'descripcion':result[1],
                     'fecha':result[2],
                     'id_usuario':result[3],
@@ -73,14 +73,14 @@ class PqrController:
             content = {} 
             for data in result:
                 content={
-                    'id_pqrs':data[0],
+                    'id_pqr':data[0],
                     'descripcion':data[1],
                     'fecha':data[2],
                     'id_usuario':data[3],
                     'id_tipo':data[4],
                     'id_estado':data[5],
                     'id_departamento':data[6],
-                    'id_prioridad':data[7],
+                    'id_prioridad':data[7]
                     
                 }
                 payload.append(content)
@@ -104,12 +104,10 @@ class PqrController:
             cursor.execute("""
                 UPDATE pqr
                 SET descripcion = %s, fecha = %s, id_usuario = %s, id_tipo = %s, id_estado = %s,
-                    id_departamento = %s, id_prioridad = %s, evidencias = %s, historial_estado = %s,
-                    departamento = %s, estado = %s, prioridad = %s, tipo_pqr = %s, usuario = %s, respuesta = %s
+                    id_departamento = %s, id_prioridad = %s
                 WHERE id_pqr = %s
             """, (pqr.descripcion, pqr.fecha, pqr.id_usuario, pqr.id_tipo, pqr.id_estado, pqr.id_departamento,
-                  pqr.id_prioridad, pqr.evidencias, pqr.historial_estado, pqr.departamento, pqr.estado,
-                  pqr.prioridad, pqr.tipo_pqr, pqr.usuario, pqr.respuesta, pqr_id))
+                  pqr.id_prioridad, pqr_id))
             conn.commit()
             if cursor.rowcount == 0:
                 raise HTTPException(status_code=404, detail="Pqr no encontrado")
