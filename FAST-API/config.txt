@@ -63,3 +63,7 @@ DESPUES
 git add .
 git commit -m "Lo que hice"
 git push
+
+ENTRAR A LA CARPETA APP
+cd FAST-API/app
+
