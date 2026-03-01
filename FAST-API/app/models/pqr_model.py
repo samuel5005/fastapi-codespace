@@ -1,11 +1,11 @@
 from pydantic import BaseModel
-from datetime import date
+from datetime import datetime
 
 
 class Pqr(BaseModel):
     id_pqr: int = None
     descripcion: str
-    fecha: date
+    fecha: datetime
     id_usuario:int
     id_tipo: int
     id_estado: int

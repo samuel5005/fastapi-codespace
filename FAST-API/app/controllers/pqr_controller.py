@@ -28,7 +28,7 @@ class PqrController:
         try:
             conn = get_db_connection()
             cursor = conn.cursor()
-            cursor.execute("SELECT * FROM pqr WHERE id = %s", (pqr_id,))
+            cursor.execute("SELECT * FROM pqr WHERE id_pqr = %s", (pqr_id,))
             result = cursor.fetchone()
             payload = []
             content = {} 
@@ -106,7 +106,7 @@ class PqrController:
                 SET descripcion = %s, fecha = %s, id_usuario = %s, id_tipo = %s, id_estado = %s,
                     id_departamento = %s, id_prioridad = %s, evidencias = %s, historial_estado = %s,
                     departamento = %s, estado = %s, prioridad = %s, tipo_pqr = %s, usuario = %s, respuesta = %s
-                WHERE id = %s
+                WHERE id_pqr = %s
             """, (pqr.descripcion, pqr.fecha, pqr.id_usuario, pqr.id_tipo, pqr.id_estado, pqr.id_departamento,
                   pqr.id_prioridad, pqr.evidencias, pqr.historial_estado, pqr.departamento, pqr.estado,
                   pqr.prioridad, pqr.tipo_pqr, pqr.usuario, pqr.respuesta, pqr_id))
@@ -124,7 +124,7 @@ class PqrController:
         try:
             conn = get_db_connection()
             cursor = conn.cursor()
-            cursor.execute("DELETE FROM pqr WHERE id = %s", (pqr_id,))
+            cursor.execute("DELETE FROM pqr WHERE id_pqr = %s", (pqr_id,))
             conn.commit()
             if cursor.rowcount == 0:
                 raise HTTPException(status_code=404, detail="Pqr no encontrado")
