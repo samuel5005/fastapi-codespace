@@ -68,5 +68,5 @@ ENTRAR A LA CARPETA APP
 cd FAST-API/app
 
 git add .
-git commit -m "mensaje"
+git commit -m "nuevo cambio"
 git push

@@ -6,4 +6,5 @@ class Asignacion_responsable(BaseModel):
     id_pqr: int
     id_usuario: int
     fecha_asignacion: date
+    
    
