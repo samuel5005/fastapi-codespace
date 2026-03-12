@@ -14,25 +14,22 @@ from fastapi.middleware.cors import CORSMiddleware
 
 app = FastAPI()
 
-
-
-
-
+# Actualizamos los orígenes permitidos
 origins = [
-    #"http://localhost.tiangolo.com",
     "https://ep-young-sunset-aid708e7-pooler.c-4.us-east-1.aws.neon.tech",
-    "http://localhost"
-    #"http://localhost:8080",
+    "http://localhost",
+    "http://localhost:5173", # Puerto local de Svelte
+    # Agregamos la URL específica de tu Codespace para el frontend:
+    "https://zany-dollop-97r6rvrq7qq62jx5-5173.app.github.dev" 
 ]
 
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=origins,
+    allow_origins=origins, # Ahora incluye tu frontend de Codespaces
     allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],
 )
-
 
 app.include_router(usuario_router)
 app.include_router(tipo_pqr_router)
