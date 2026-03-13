@@ -34,5 +34,5 @@ async def delete_historial_estado(historial_estado_id: int):
 # Ver toda la trazabilidad de estados de una PQR (quién la movió y cuándo)
 @router.get("/get_historial_by_pqr/{pqr_id}")
 async def get_historial_by_pqr(pqr_id: int):
-    return nuevo_historial.get_historial_by_pqr(pqr_id)
+    return nuevo_historial_estado.get_historial_by_pqr(pqr_id)
 

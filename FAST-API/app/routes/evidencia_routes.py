@@ -34,9 +34,9 @@ async def delete_evidencia(evidencia_id: int):
 # Ver todas las evidencias adjuntas a una PQR
 @router.get("/get_evidencias_by_pqr/{pqr_id}")
 async def get_evidencias_by_pqr(pqr_id: int):
-    return nueva_evidencia.get_evidencias_by_pqr(pqr_id)
+    return nuevo_evidencia.get_evidencias_by_pqr(pqr_id)
 
 # Eliminar todas las evidencias de una PQR de una vez
 @router.delete("/delete_evidencias_by_pqr/{pqr_id}")
 async def delete_evidencias_by_pqr(pqr_id: int):
-    return nueva_evidencia.delete_evidencias_by_pqr(pqr_id)
+    return nuevo_evidencia.delete_evidencias_by_pqr(pqr_id)

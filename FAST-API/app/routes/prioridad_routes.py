@@ -34,4 +34,4 @@ async def delete_prioridad(prioridad_id: int):
 # Ver cuántas PQRs hay por cada nivel de prioridad
 @router.get("/get_conteo_pqrs_por_prioridad/")
 async def get_conteo_pqrs_por_prioridad():
-    return nueva_prioridad.get_conteo_pqrs_por_prioridad()
+    return nuevo_prioridad.get_conteo_pqrs_por_prioridad()
