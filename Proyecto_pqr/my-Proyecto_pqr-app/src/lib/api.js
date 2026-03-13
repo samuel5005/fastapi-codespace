@@ -146,13 +146,15 @@ export async function getEstados() {
 }
 
 export async function getDepartamentos() {
-  const res = await fetch(`${API}/get_departamentos/`)
-  return res.json()
+    const res = await fetch(`${API}/get_departamentos/`);
+    const data = await res.json();
+    return data.resultado; // <--- Importante: añadir .resultado
 }
 
 export async function getPrioridades() {
-  const res = await fetch(`${API}/get_prioridades/`)
-  return res.json()
+    const res = await fetch(`${API}/get_prioridades/`);
+    const data = await res.json();
+    return data.resultado; // <--- Importante: añadir .resultado
 }
 
 export async function getTiposPqr() {
