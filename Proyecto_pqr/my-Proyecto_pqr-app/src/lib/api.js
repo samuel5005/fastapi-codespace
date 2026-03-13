@@ -139,7 +139,7 @@ export async function createEvidencia(data) {
   return res.json()
 }
 
-// ── CATÁLOGOS (estados, departamentos, prioridades, tipos, roles) ──
+// ── CATÁLOGOS ─────────────────────────────────────────────
 export async function getEstados() {
   const res = await fetch(`${API}/get_estados/`)
   return res.json()
@@ -205,4 +205,26 @@ export async function createAsignacion(data) {
 export async function getHistorialByPqr(pqrId) {
   const res = await fetch(`${API}/get_historial_by_pqr/${pqrId}`)
   return res.json()
+}
+
+// ── EXPORT OBJETO api ─────────────────────────────────────
+export const api = {
+  // Usuarios
+  getUsuarios, getUsuario, createUsuario, updateUsuario, deleteUsuario, getUsuariosByRol,
+  // PQRs
+  getPqrs, getPqr, createPqr, updatePqr, deletePqr,
+  getPqrsByUsuario, getPqrsByEstado, updateEstadoPqr,
+  getPqrsByDepartamento, getPqrsByPrioridad,
+  // Respuestas
+  getRespuestas, createRespuesta, getRespuestasByPqr, getRespuestasByUsuario,
+  // Evidencias
+  getEvidenciasByPqr, createEvidencia,
+  // Catálogos
+  getEstados, getDepartamentos, getPrioridades, getTiposPqr, getRoles,
+  // Dashboard
+  getConteoPqrsPorEstado, getConteoPqrsPorDepartamento, getConteoPqrsPorTipo,
+  // Asignaciones
+  getAsignacionByPqr, getAsignacionesByUsuario, createAsignacion,
+  // Historial
+  getHistorialByPqr
 }
