@@ -4,14 +4,14 @@
   import UsuariosModule from './UsuariosModule.svelte'
   import HomeModule from './HomeModule.svelte'
 
-  export let page = 'home'
+  let { page = $bindable('home') } = $props()
 
-  $: isAdmin = $currentUser?.id_rol === 1
+  let isAdmin = $derived($currentUser?.id_rol === 1)
 
   const navItems = [
-    { id: 'home',     label: 'Inicio',    icon: '⊞', always: true },
-    { id: 'pqrs',     label: 'PQRs',      icon: '◈', always: true },
-    { id: 'usuarios', label: 'Usuarios',  icon: '◉', admin: true  },
+    { id: 'home',     label: 'Inicio',   icon: '⊞', always: true },
+    { id: 'pqrs',     label: 'PQRs',     icon: '◈', always: true },
+    { id: 'usuarios', label: 'Usuarios', icon: '◉', admin: true  },
   ]
 
   function handleLogout() {
@@ -38,7 +38,7 @@
           {#if item.always || (item.admin && isAdmin)}
             <button
               class="nav-item {page === item.id ? 'active' : ''}"
-              on:click={() => page = item.id}
+              onclick={() => page = item.id}
             >
               <span class="nav-icon">{item.icon}</span>
               <span>{item.label}</span>
@@ -56,7 +56,7 @@
           <p class="user-role">{$currentUser?.id_rol === 1 ? 'Administrador' : 'Usuario'}</p>
         </div>
       </div>
-      <button class="btn-logout" on:click={handleLogout}>
+      <button class="btn-logout" onclick={handleLogout}>
         <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
           <path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4M16 17l5-5-5-5M21 12H9"/>
         </svg>
@@ -68,7 +68,7 @@
   <!-- MAIN CONTENT -->
   <main class="main">
     {#if page === 'home'}
-      <HomeModule on:navigate={(e) => page = e.detail} />
+      <HomeModule onnavigate={(p) => page = p} />
     {:else if page === 'pqrs'}
       <PqrModule />
     {:else if page === 'usuarios' && isAdmin}
@@ -85,7 +85,6 @@
     min-height: 100vh;
   }
 
-  /* SIDEBAR */
   .sidebar {
     width: 240px;
     min-width: 240px;
@@ -215,7 +214,6 @@
     color: var(--danger);
   }
 
-  /* MAIN */
   .main {
     flex: 1;
     overflow-y: auto;
@@ -227,7 +225,6 @@
     color: var(--text-muted);
   }
 
-  /* RESPONSIVE */
   @media (max-width: 768px) {
     .layout { flex-direction: column; }
     .sidebar {
