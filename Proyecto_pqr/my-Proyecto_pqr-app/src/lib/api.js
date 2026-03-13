@@ -1,5 +1,5 @@
 // Cambia esta URL si tu API corre en otro puerto o dominio
-const API = "https://curly-space-parakeet-x5x9q6wg547qcv44g-8000.app.github.dev"
+const API = "https://animated-space-goldfish-4j6g947pjw5phwj-8000.app.github.dev"
 
 // ── USUARIOS ──────────────────────────────────────────────
 export async function getUsuarios() {
