@@ -140,9 +140,12 @@ export async function createEvidencia(data) {
 }
 
 // ── CATÁLOGOS ─────────────────────────────────────────────
+// --- ESTADOS ---
 export async function getEstados() {
-  const res = await fetch(`${API}/get_estados/`)
-  return res.json()
+    const res = await fetch(`${API}/get_estados/`);
+    const data = await res.json();
+    return data.resultado; // <--- Retornamos solo la lista de estados
+
 }
 
 export async function getDepartamentos() {
