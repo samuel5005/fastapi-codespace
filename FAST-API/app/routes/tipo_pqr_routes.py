@@ -30,3 +30,8 @@ async def update_tipo_pqr(tipo_pqr_id: int, tipo_pqr: Tipo_pqr):
 @router.delete("/delete_tipo_pqr/{tipo_pqr_id}")
 async def delete_tipo_pqr(tipo_pqr_id: int):
     return nuevo_tipo_pqr.delete_tipo_pqr(tipo_pqr_id)
+
+# Ver cuántas PQRs son Petición, Queja o Reclamo
+@router.get("/get_conteo_pqrs_por_tipo/")
+async def get_conteo_pqrs_por_tipo():
+    return nuevo_tipo_pqr.get_conteo_pqrs_por_tipo()

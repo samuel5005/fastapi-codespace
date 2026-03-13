@@ -30,3 +30,14 @@ async def update_respuesta(respuesta_id: int, respuesta: Respuesta):
 @router.delete("/delete_respuesta/{respuesta_id}")
 async def delete_respuesta(respuesta_id: int):
     return nuevo_respuesta.delete_respuesta(respuesta_id)
+
+# Ver el hilo completo de respuestas de una PQR
+@router.get("/get_respuestas_by_pqr/{pqr_id}")
+async def get_respuestas_by_pqr(pqr_id: int):
+    return nueva_respuesta.get_respuestas_by_pqr(pqr_id)
+
+# Ver todas las respuestas que ha dado un usuario/responsable
+@router.get("/get_respuestas_by_usuario/{usuario_id}")
+async def get_respuestas_by_usuario(usuario_id: int):
+    return nueva_respuesta.get_respuestas_by_usuario(usuario_id)
+

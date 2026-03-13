@@ -30,3 +30,8 @@ async def update_departamento(departamento_id: int, departamento: Departamento):
 @router.delete("/delete_departamento/{departamento_id}")
 async def delete_departamento(departamento_id: int):
     return nuevo_departamento.delete_departamento(departamento_id)
+
+# Ver cuál departamento tiene más PQRs asignadas
+@router.get("/get_conteo_pqrs_por_departamento/")
+async def get_conteo_pqrs_por_departamento():
+    return nuevo_departamento.get_conteo_pqrs_por_departamento()

@@ -31,3 +31,9 @@ async def update_estado(estado_id: int, estado: Estado):
 async def delete_estado(estado_id: int):
     return nuevo_estado.delete_estado(estado_id)
 
+# Cuántas PQRs hay en cada estado — para mostrar en el dashboard
+@router.get("/get_conteo_pqrs_por_estado/")
+async def get_conteo_pqrs_por_estado():
+    return nuevo_estado.get_conteo_pqrs_por_estado()
+
+

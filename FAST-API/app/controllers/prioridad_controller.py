@@ -118,6 +118,34 @@ class PrioridadController:
             conn.rollback()
         finally:
             conn.close()
+
+    # Cuántas PQRs hay por cada nivel de prioridad — para ver cuántas son urgentes
+    def get_conteo_pqrs_por_prioridad(self):
+        try:
+            conn = get_db_connection()
+            cursor = conn.cursor()
+            cursor.execute("""
+                SELECT pr.id_prioridad, pr.nombre, COUNT(p.id_pqr) AS total
+                FROM prioridad pr
+                LEFT JOIN pqr p ON pr.id_prioridad = p.id_prioridad
+                GROUP BY pr.id_prioridad, pr.nombre
+                ORDER BY pr.id_prioridad
+            """)
+            result = cursor.fetchall()
+            payload = []
+            for data in result:
+                content = {
+                    'id_prioridad': data[0],
+                    'nombre': data[1],
+                    'total_pqrs': data[2]
+                }
+                payload.append(content)
+            return {"resultado": jsonable_encoder(payload)}
+        except psycopg2.Error as err:
+            print(err)
+            conn.rollback()
+        finally:
+            conn.close()
     
     
        

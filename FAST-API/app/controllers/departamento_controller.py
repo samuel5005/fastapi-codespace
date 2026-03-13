@@ -118,6 +118,34 @@ class DepartamentoController:
             conn.rollback()
         finally:
             conn.close()
+
+    # Cuántas PQRs tiene cada departamento — para ver cuál está más cargado
+    def get_conteo_pqrs_por_departamento(self):
+        try:
+            conn = get_db_connection()
+            cursor = conn.cursor()
+            cursor.execute("""
+                SELECT d.id_departamento, d.nombre, COUNT(p.id_pqr) AS total
+                FROM departamento d
+                LEFT JOIN pqr p ON d.id_departamento = p.id_departamento
+                GROUP BY d.id_departamento, d.nombre
+                ORDER BY total DESC
+            """)
+            result = cursor.fetchall()
+            payload = []
+            for data in result:
+                content = {
+                    'id_departamento': data[0],
+                    'nombre': data[1],
+                    'total_pqrs': data[2]
+                }
+                payload.append(content)
+            return {"resultado": jsonable_encoder(payload)}
+        except psycopg2.Error as err:
+            print(err)
+            conn.rollback()
+        finally:
+            conn.close()
     
     
        

@@ -31,3 +31,8 @@ async def update_usuario(usuario_id: int, usuario: Usuario):
 @router.delete("/delete_usuario/{usuario_id}")
 async def delete_usuario(usuario_id: int):
     return nuevo_usuario.delete_usuario(usuario_id)
+
+# Obtener usuarios filtrados por rol — útil para listar solo admins o solo usuarios normales
+@router.get("/get_usuarios_by_rol/{rol_id}")
+async def get_usuarios_by_rol(rol_id: int):
+    return nuevo_usuario.get_usuarios_by_rol(rol_id)

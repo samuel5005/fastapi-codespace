@@ -30,3 +30,13 @@ async def update_asignacion_responsable(asignacion_responsable_id: int, asignaci
 @router.delete("/delete_asignacion_responsable/{asignacion_responsable_id}")
 async def delete_asignacion_responsable(asignacion_responsable_id: int):
     return nuevo_asignacion_responsable.delete_asignacion_responsable(asignacion_responsable_id)
+
+# Ver todas las PQRs asignadas a un responsable — su bandeja de trabajo
+@router.get("/get_asignaciones_by_usuario/{usuario_id}")
+async def get_asignaciones_by_usuario(usuario_id: int):
+    return nueva_asignacion.get_asignaciones_by_usuario(usuario_id)
+
+# Ver quién tiene asignada una PQR específica
+@router.get("/get_asignacion_by_pqr/{pqr_id}")
+async def get_asignacion_by_pqr(pqr_id: int):
+    return nueva_asignacion.get_asignacion_by_pqr(pqr_id)

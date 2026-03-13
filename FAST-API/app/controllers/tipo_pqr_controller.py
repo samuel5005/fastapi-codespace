@@ -160,3 +160,37 @@ class Tipo_pqrController:
         finally:
             if conn:
                 conn.close()
+
+    # Cuántas PQRs hay de cada tipo — para ver si predominan Peticiones, Quejas o Reclamos
+    def get_conteo_pqrs_por_tipo(self):
+        conn = None
+        try:
+            conn = get_db_connection()
+            cursor = conn.cursor()
+            cursor.execute("""
+                SELECT t.id_tipo, t.nombre, COUNT(p.id_pqr) AS total
+                FROM tipo_pqr t
+                LEFT JOIN pqr p ON t.id_tipo = p.id_tipo
+                GROUP BY t.id_tipo, t.nombre
+                ORDER BY total DESC
+            """)
+            result = cursor.fetchall()
+            payload = []
+            for data in result:
+                content = {
+                    'id_tipo': data[0],
+                    'nombre': data[1],
+                    'total_pqrs': data[2]
+                }
+                payload.append(content)
+            return {"resultado": jsonable_encoder(payload)}
+        except psycopg2.Error as err:
+            if conn:
+                conn.rollback()
+            print(err)
+            raise HTTPException(status_code=500, detail="Error en base de datos")
+        finally:
+            if conn:
+                conn.close()
+
+    

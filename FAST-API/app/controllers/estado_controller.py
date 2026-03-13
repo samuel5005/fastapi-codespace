@@ -119,6 +119,35 @@ class EstadoController:
             conn.rollback()
         finally:
             conn.close()
+
+    # Contar cuántas PQRs hay en cada estado — para el dashboard de estadísticas
+    def get_conteo_pqrs_por_estado(self):
+        try:
+            conn = get_db_connection()
+            cursor = conn.cursor()
+            cursor.execute("""
+                SELECT e.id_estado, e.nombre, COUNT(p.id_pqr) AS total
+                FROM estado e
+                LEFT JOIN pqr p ON e.id_estado = p.id_estado
+                GROUP BY e.id_estado, e.nombre
+                ORDER BY e.id_estado
+            """)
+            result = cursor.fetchall()
+            payload = []
+            for data in result:
+                content = {
+                    'id_estado': data[0],
+                    'nombre': data[1],
+                    'total_pqrs': data[2]
+                }
+                payload.append(content)
+            return {"resultado": jsonable_encoder(payload)}
+        except psycopg2.Error as err:
+            print(err)
+            conn.rollback()
+        finally:
+            conn.close()
+
     
     
        

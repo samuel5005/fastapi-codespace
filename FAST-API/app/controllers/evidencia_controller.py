@@ -122,6 +122,44 @@ class EvidenciaController:
             conn.rollback()
         finally:
             conn.close()
+
+    # Ver todas las evidencias adjuntas a una PQR — para revisar los soportes enviados
+    def get_evidencias_by_pqr(self, pqr_id: int):
+        try:
+            conn = get_db_connection()
+            cursor = conn.cursor()
+            cursor.execute("SELECT * FROM evidencia WHERE id_pqr = %s", (pqr_id,))
+            result = cursor.fetchall()
+            payload = []
+            for data in result:
+                content = {
+                    'id_evidencia': data[0], 'nombre_archivo': data[1],
+                    'url': data[2], 'id_pqr': data[3]
+                }
+                payload.append(content)
+            if result:
+                return {"resultado": jsonable_encoder(payload)}
+            else:
+                raise HTTPException(status_code=404, detail="No hay evidencias para esta PQR")
+        except psycopg2.Error as err:
+            print(err)
+            conn.rollback()
+        finally:
+            conn.close()
+
+    # Eliminar todas las evidencias de una PQR — útil al cerrar o eliminar la solicitud
+    def delete_evidencias_by_pqr(self, pqr_id: int):
+        try:
+            conn = get_db_connection()
+            cursor = conn.cursor()
+            cursor.execute("DELETE FROM evidencia WHERE id_pqr = %s", (pqr_id,))
+            conn.commit()
+            return {"resultado": f"Evidencias de la PQR {pqr_id} eliminadas"}
+        except psycopg2.Error as err:
+            print(err)
+            conn.rollback()
+        finally:
+            conn.close()
     
     
        

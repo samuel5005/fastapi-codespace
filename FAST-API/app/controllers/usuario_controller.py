@@ -132,7 +132,32 @@ class UsuarioController:
             conn.rollback()
         finally:
             conn.close()
-    
+
+    # Obtener todos los usuarios que tienen un rol específico — filtrar admins o usuarios normales
+    def get_usuarios_by_rol(self, rol_id: int):
+        try:
+            conn = get_db_connection()
+            cursor = conn.cursor()
+            cursor.execute("SELECT * FROM usuario WHERE id_rol = %s", (rol_id,))
+            result = cursor.fetchall()
+            payload = []
+            for data in result:
+                content = {
+                    'id_usuario': data[0], 'nombre': data[1], 'cedula': data[2],
+                    'carrera': data[3], 'semestre': data[4], 'cargo': data[5],
+                    'celular': data[6], 'correo': data[7], 'id_rol': data[8]
+                }
+                payload.append(content)
+            if result:
+                return {"resultado": jsonable_encoder(payload)}
+            else:
+                raise HTTPException(status_code=404, detail="No hay usuarios con ese rol")
+        except psycopg2.Error as err:
+            print(err)
+            conn.rollback()
+        finally:
+            conn.close()
+
     
        
 

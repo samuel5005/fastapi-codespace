@@ -30,3 +30,9 @@ async def update_historial_estado(historial_estado_id: int, historial_estado: Hi
 @router.delete("/delete_historial_estado/{historial_estado_id}")
 async def delete_historial_estado(historial_estado_id: int):
     return nuevo_historial_estado.delete_historial_estado(historial_estado_id)
+
+# Ver toda la trazabilidad de estados de una PQR (quién la movió y cuándo)
+@router.get("/get_historial_by_pqr/{pqr_id}")
+async def get_historial_by_pqr(pqr_id: int):
+    return nuevo_historial.get_historial_by_pqr(pqr_id)
+

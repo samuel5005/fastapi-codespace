@@ -105,3 +105,27 @@ class Historial_estadoController:
             return {"error": str(err)}
         finally:
             conn.close()
+
+     # Ver el historial completo de cambios de estado de una PQR — trazabilidad total
+    def get_historial_by_pqr(self, pqr_id: int):
+        try:
+            conn = get_db_connection()
+            cursor = conn.cursor()
+            cursor.execute("SELECT * FROM historial_estado WHERE id_pqr = %s ORDER BY fecha ASC", (pqr_id,))
+            result = cursor.fetchall()
+            payload = []
+            for data in result:
+                content = {
+                    'id_historial': data[0], 'fecha': data[1],
+                    'id_pqr': data[2], 'id_estado': data[3]
+                }
+                payload.append(content)
+            if result:
+                return {"resultado": jsonable_encoder(payload)}
+            else:
+                raise HTTPException(status_code=404, detail="No hay historial para esta PQR")
+        except psycopg2.Error as err:
+            print(err)
+            conn.rollback()
+        finally:
+            conn.close()

@@ -132,6 +132,127 @@ class PqrController:
             conn.rollback()
         finally:
             conn.close()
+
+    # Obtener todas las PQRs de un usuario — para que cada usuario vea solo las suyas
+    def get_pqrs_by_usuario(self, usuario_id: int):
+        try:
+            conn = get_db_connection()
+            cursor = conn.cursor()
+            cursor.execute("SELECT * FROM pqr WHERE id_usuario = %s", (usuario_id,))
+            result = cursor.fetchall()
+            payload = []
+            for data in result:
+                content = {
+                    'id_pqr': data[0], 'descripcion': data[1],
+                    'fecha': data[2], 'id_usuario': data[3],
+                    'id_tipo': data[4], 'id_estado': data[5],
+                    'id_departamento': data[6], 'id_prioridad': data[7]
+                }
+                payload.append(content)
+            if result:
+                return {"resultado": jsonable_encoder(payload)}
+            else:
+                raise HTTPException(status_code=404, detail="No se encontraron PQRs para este usuario")
+        except psycopg2.Error as err:
+            print(err)
+            conn.rollback()
+        finally:
+            conn.close()
+
+    # Filtrar PQRs por estado — ver Pendientes, En proceso, Resueltas, etc.
+    def get_pqrs_by_estado(self, estado_id: int):
+        try:
+            conn = get_db_connection()
+            cursor = conn.cursor()
+            cursor.execute("SELECT * FROM pqr WHERE id_estado = %s", (estado_id,))
+            result = cursor.fetchall()
+            payload = []
+            for data in result:
+                content = {
+                    'id_pqr': data[0], 'descripcion': data[1],
+                    'fecha': data[2], 'id_usuario': data[3],
+                    'id_tipo': data[4], 'id_estado': data[5],
+                    'id_departamento': data[6], 'id_prioridad': data[7]
+                }
+                payload.append(content)
+            if result:
+                return {"resultado": jsonable_encoder(payload)}
+            else:
+                raise HTTPException(status_code=404, detail="No hay PQRs con ese estado")
+        except psycopg2.Error as err:
+            print(err)
+            conn.rollback()
+        finally:
+            conn.close()
+
+    # Cambiar solo el estado de una PQR — sin modificar todo el registro
+    def update_estado_pqr(self, pqr_id: int, nuevo_estado_id: int):
+        try:
+            conn = get_db_connection()
+            cursor = conn.cursor()
+            cursor.execute("UPDATE pqr SET id_estado = %s WHERE id_pqr = %s", (nuevo_estado_id, pqr_id))
+            conn.commit()
+            if cursor.rowcount == 0:
+                raise HTTPException(status_code=404, detail="PQR no encontrada")
+            return {"resultado": "Estado de PQR actualizado"}
+        except psycopg2.Error as err:
+            print(err)
+            conn.rollback()
+        finally:
+            conn.close()
+
+    # Filtrar PQRs por departamento — ver las solicitudes asignadas a cada área
+    def get_pqrs_by_departamento(self, departamento_id: int):
+        try:
+            conn = get_db_connection()
+            cursor = conn.cursor()
+            cursor.execute("SELECT * FROM pqr WHERE id_departamento = %s", (departamento_id,))
+            result = cursor.fetchall()
+            payload = []
+            for data in result:
+                content = {
+                    'id_pqr': data[0], 'descripcion': data[1],
+                    'fecha': data[2], 'id_usuario': data[3],
+                    'id_tipo': data[4], 'id_estado': data[5],
+                    'id_departamento': data[6], 'id_prioridad': data[7]
+                }
+                payload.append(content)
+            if result:
+                return {"resultado": jsonable_encoder(payload)}
+            else:
+                raise HTTPException(status_code=404, detail="No hay PQRs para ese departamento")
+        except psycopg2.Error as err:
+            print(err)
+            conn.rollback()
+        finally:
+            conn.close()
+
+    # Filtrar PQRs por prioridad — ver las urgentes primero
+    def get_pqrs_by_prioridad(self, prioridad_id: int):
+        try:
+            conn = get_db_connection()
+            cursor = conn.cursor()
+            cursor.execute("SELECT * FROM pqr WHERE id_prioridad = %s", (prioridad_id,))
+            result = cursor.fetchall()
+            payload = []
+            for data in result:
+                content = {
+                    'id_pqr': data[0], 'descripcion': data[1],
+                    'fecha': data[2], 'id_usuario': data[3],
+                    'id_tipo': data[4], 'id_estado': data[5],
+                    'id_departamento': data[6], 'id_prioridad': data[7]
+                }
+                payload.append(content)
+            if result:
+                return {"resultado": jsonable_encoder(payload)}
+            else:
+                raise HTTPException(status_code=404, detail="No hay PQRs con esa prioridad")
+        except psycopg2.Error as err:
+            print(err)
+            conn.rollback()
+        finally:
+            conn.close()
+
     
     
 ##pqr_controller = pqrController()

@@ -125,6 +125,55 @@ class RespuestaController:
             conn.rollback()
         finally:
             conn.close()
+
+    # Obtener todas las respuestas de una PQR específica — ver el hilo de respuestas
+    def get_respuestas_by_pqr(self, pqr_id: int):
+        try:
+            conn = get_db_connection()
+            cursor = conn.cursor()
+            cursor.execute("SELECT * FROM respuesta WHERE id_pqr = %s ORDER BY fecha ASC", (pqr_id,))
+            result = cursor.fetchall()
+            payload = []
+            for data in result:
+                content = {
+                    'id_respuesta': data[0], 'mensaje': data[1],
+                    'fecha': data[2], 'id_pqr': data[3], 'id_usuario': data[4]
+                }
+                payload.append(content)
+            if result:
+                return {"resultado": jsonable_encoder(payload)}
+            else:
+                raise HTTPException(status_code=404, detail="No hay respuestas para esta PQR")
+        except psycopg2.Error as err:
+            print(err)
+            conn.rollback()
+        finally:
+            conn.close()
+
+    # Obtener todas las respuestas dadas por un usuario — ver historial de respuestas del responsable
+    def get_respuestas_by_usuario(self, usuario_id: int):
+        try:
+            conn = get_db_connection()
+            cursor = conn.cursor()
+            cursor.execute("SELECT * FROM respuesta WHERE id_usuario = %s ORDER BY fecha DESC", (usuario_id,))
+            result = cursor.fetchall()
+            payload = []
+            for data in result:
+                content = {
+                    'id_respuesta': data[0], 'mensaje': data[1],
+                    'fecha': data[2], 'id_pqr': data[3], 'id_usuario': data[4]
+                }
+                payload.append(content)
+            if result:
+                return {"resultado": jsonable_encoder(payload)}
+            else:
+                raise HTTPException(status_code=404, detail="No hay respuestas de este usuario")
+        except psycopg2.Error as err:
+            print(err)
+            conn.rollback()
+        finally:
+            conn.close()
+
     
     
        

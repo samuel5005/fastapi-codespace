@@ -30,3 +30,8 @@ async def update_rol(rol_id: int, rol: Rol):
 @router.delete("/delete_rol/{rol_id}")
 async def delete_rol(rol_id: int):
     return nuevo_rol.delete_rol(rol_id)
+
+# Ver cuántos usuarios tiene cada rol
+@router.get("/get_conteo_usuarios_por_rol/")
+async def get_conteo_usuarios_por_rol():
+    return nuevo_rol.get_conteo_usuarios_por_rol()

@@ -124,6 +124,53 @@ class Asignacion_responsableController:
             conn.rollback()
         finally:
             conn.close()
+
+    # Ver todas las PQRs asignadas a un responsable — su carga de trabajo
+    def get_asignaciones_by_usuario(self, usuario_id: int):
+        try:
+            conn = get_db_connection()
+            cursor = conn.cursor()
+            cursor.execute("SELECT * FROM asignacion_responsable WHERE id_usuario = %s ORDER BY fecha_asignacion DESC", (usuario_id,))
+            result = cursor.fetchall()
+            payload = []
+            for data in result:
+                content = {
+                    'id_asignacion': data[0], 'id_pqr': data[1],
+                    'id_usuario': data[2], 'fecha_asignacion': data[3]
+                }
+                payload.append(content)
+            if result:
+                return {"resultado": jsonable_encoder(payload)}
+            else:
+                raise HTTPException(status_code=404, detail="No hay asignaciones para este usuario")
+        except psycopg2.Error as err:
+            print(err)
+            conn.rollback()
+        finally:
+            conn.close()
+
+    # Ver quién está asignado a una PQR específica
+    def get_asignacion_by_pqr(self, pqr_id: int):
+        try:
+            conn = get_db_connection()
+            cursor = conn.cursor()
+            cursor.execute("SELECT * FROM asignacion_responsable WHERE id_pqr = %s", (pqr_id,))
+            result = cursor.fetchone()
+            if result:
+                content = {
+                    'id_asignacion': result[0], 'id_pqr': result[1],
+                    'id_usuario': result[2], 'fecha_asignacion': result[3]
+                }
+                return jsonable_encoder(content)
+            else:
+                raise HTTPException(status_code=404, detail="No hay asignacion para esta PQR")
+        except psycopg2.Error as err:
+            print(err)
+            conn.rollback()
+        finally:
+            conn.close()
+
+    
     
     
        

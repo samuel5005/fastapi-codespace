@@ -118,6 +118,35 @@ class RolController:
             conn.rollback()
         finally:
             conn.close()
+
+    # Cuántos usuarios tiene cada rol — para saber cuántos admins y usuarios hay
+    def get_conteo_usuarios_por_rol(self):
+        try:
+            conn = get_db_connection()
+            cursor = conn.cursor()
+            cursor.execute("""
+                SELECT r.id_rol, r.nombre, COUNT(u.id_usuario) AS total
+                FROM rol r
+                LEFT JOIN usuario u ON r.id_rol = u.id_rol
+                GROUP BY r.id_rol, r.nombre
+                ORDER BY r.id_rol
+            """)
+            result = cursor.fetchall()
+            payload = []
+            for data in result:
+                content = {
+                    'id_rol': data[0],
+                    'nombre_rol': data[1],
+                    'total_usuarios': data[2]
+                }
+                payload.append(content)
+            return {"resultado": jsonable_encoder(payload)}
+        except psycopg2.Error as err:
+            print(err)
+            conn.rollback()
+        finally:
+            conn.close()
+
     
     
        
