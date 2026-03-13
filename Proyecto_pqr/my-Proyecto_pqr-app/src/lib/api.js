@@ -150,11 +150,9 @@ export async function getDepartamentos() {
   return res.json()
 }
 
-export async function getTiposPqr() {
-    const res = await fetch(`${API}/get_tipo_pqrs/`);
-    const data = await res.json();
-    return data.resultado; 
-
+export async function getPrioridades() {
+  const res = await fetch(`${API}/get_prioridades/`)
+  return res.json()
 }
 
 export async function getTiposPqr() {
